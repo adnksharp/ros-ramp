@@ -1,0 +1,9 @@
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/uninstall.dir
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/viz_uninstall.dir
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/test.dir
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/edit_cache.dir
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/rebuild_cache.dir
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/list_install_components.dir
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/install.dir
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/install/local.dir
+/home/akey/Documentos/dev/vision/Z01/build/viz/CMakeFiles/install/strip.dir

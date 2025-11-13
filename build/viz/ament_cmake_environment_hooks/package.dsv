@@ -1,0 +1,4 @@
+source;share/viz/local_setup.bash
+source;share/viz/local_setup.dsv
+source;share/viz/local_setup.sh
+source;share/viz/local_setup.zsh

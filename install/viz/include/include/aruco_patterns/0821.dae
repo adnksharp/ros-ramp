@@ -1,0 +1,119 @@
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <created>2025-11-07T14:47:40.583109</created>
+    <modified>2025-11-07T14:47:40.583113</modified>
+    <up_axis>Y_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="effect_0821" name="effect_0821">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color>1.0 1.0 1.0 1.0</color>
+            </emission>
+            <ambient>
+              <color>1.0 1.0 1.0 1.0</color>
+            </ambient>
+            <diffuse>
+              <texture texture="image_0821" texcoord="0"/>
+            </diffuse>
+            <specular>
+              <color>0.5 0.5 0.5 1.0</color>
+            </specular>
+            <shininess>
+              <float>0.0</float>
+            </shininess>
+            <reflective>
+              <color>0.0 0.0 0.0 1.0</color>
+            </reflective>
+            <reflectivity>
+              <float>0.0</float>
+            </reflectivity>
+            <transparent>
+              <color>0.0 0.0 0.0 1.0</color>
+            </transparent>
+            <transparency>
+              <float>1.0</float>
+            </transparency>
+          </lambert>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>0</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="geometry_0821" name="aruco_cube_0821">
+      <mesh>
+        <source id="cube-verts">
+          <float_array count="24" id="cube-verts-array">0.05 -0.05 0.005 0.05 0.05 0.005 -0.05 -0.05 0.005 -0.05 0.05 0.005 0.05 -0.05 -0.005 0.05 0.05 -0.005 -0.05 -0.05 -0.005 -0.05 0.05 -0.005</float_array>
+          <technique_common>
+            <accessor count="8" source="#cube-verts-array" stride="3">
+              <param type="float" name="X"/>
+              <param type="float" name="Y"/>
+              <param type="float" name="Z"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="cube-normals">
+          <float_array count="18" id="cube-normals-array">0 0 1 0 0 -1 1 0 0 -1 0 0 0 1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor count="6" source="#cube-normals-array" stride="3">
+              <param type="float" name="X"/>
+              <param type="float" name="Y"/>
+              <param type="float" name="Z"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="cube-tex">
+          <float_array count="8" id="cube-tex-array">1 0 1 1 0 0 0 1</float_array>
+          <technique_common>
+            <accessor count="4" source="#cube-tex-array" stride="2">
+              <param type="float" name="S"/>
+              <param type="float" name="T"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="cube-verts-vertices">
+          <input semantic="POSITION" source="#cube-verts"/>
+        </vertices>
+        <triangles count="12" material="materialref">
+          <input offset="0" semantic="VERTEX" source="#cube-verts-vertices"/>
+          <input offset="1" semantic="NORMAL" source="#cube-normals"/>
+          <input offset="2" semantic="TEXCOORD" source="#cube-tex" set="0"/>
+          <p>1 0 1 0 0 0 2 0 2 1 0 1 2 0 2 3 0 3 6 1 0 4 1 0 5 1 0 6 1 0 5 1 0 7 1 0 4 2 0 0 2 0 1 2 0 4 2 0 1 2 0 5 2 0 2 3 0 6 3 0 7 3 0 2 3 0 7 3 0 3 3 0 0 5 0 4 5 0 6 5 0 0 5 0 6 5 0 2 5 0 5 4 0 1 4 0 3 4 0 5 4 0 3 4 0 7 4 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_images>
+    <image id="image_0821" name="image_0821">
+      <init_from>0821.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="material_0821" name="aruco_mat_0821">
+      <instance_effect url="#effect_0821"/>
+    </material>
+  </library_materials>
+  <library_visual_scenes>
+    <visual_scene id="myscene">
+      <node id="aruco_node_0821" name="aruco_node_0821">
+        <instance_geometry url="#geometry_0821">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="materialref" target="#material_0821"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#myscene"/>
+  </scene>
+</COLLADA>
