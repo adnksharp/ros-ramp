@@ -33,8 +33,8 @@ class CamNode(Node):
         self.device = self.get_parameter('CAM_NAME').get_parameter_value().string_value
 
         self.info_msg = self.load_calibration_and_create_msg(calib_file_path)
-        self.publisher_ = self.create_publisher(Image, 'image/raw', 10)
-        self.publisher_info = self.create_publisher(CameraInfo, 'image/camera_info', 10)
+        self.publisher_ = self.create_publisher(Image, 'camera/color/image_raw', 10)
+        self.publisher_info = self.create_publisher(CameraInfo, 'camera/color/camera_info', 10)
         self.bridge = CvBridge()
         self.hz = 1.0 / fps 
         self.timer = self.create_timer(self.hz, self.timer_callback)
@@ -53,7 +53,7 @@ class CamNode(Node):
         self.cap.set(cv.CAP_PROP_FOURCC, cv.VideoWriter_fourcc(*'MJPG')) 
 
     def load_calibration_and_create_msg(self, file_path):
-        """Carga los parámetros de calibración desde el YAML de OpenCV y crea el mensaje CameraInfo."""
+        """Carga los parámetros de calibración (K, D) y crea el mensaje CameraInfo."""
         
         if not os.path.exists(file_path):
             self.get_logger().fatal(f'Calibration file not found: {file_path}')
@@ -71,21 +71,29 @@ class CamNode(Node):
         
         self.get_logger().info('Calibration parameters loaded successfully.')
         
-        # --- 2. Calcular R y P para la rectificación óptima ---
+        # --- 1.5. CARGAR NEWCAM.NPY (Matriz de Proyección Corregida) ---
+        
+        # Definir la ruta del archivo newcam.npy (asumimos que está en el directorio share)
+        sharedDir = get_package_share_directory('viz')
+        newcam_path = os.path.join(sharedDir, 'newcam.npy')
+        
+        if not os.path.exists(newcam_path):
+            self.get_logger().fatal(f'New Camera Matrix file not found: {newcam_path}')
+            # Si el archivo no existe, lo generamos aquí mismo o asumimos la matriz de K
+            # Para este flujo, lo calculamos si no existe:
+            img_size = (self.width, self.height)
+            newcam_matrix, roi = cv.getOptimalNewCameraMatrix(K, D, img_size, 1, img_size)
+            np.save(newcam_path, newcam_matrix) # Guardar para uso futuro
+        else:
+            newcam_matrix = np.load(newcam_path)
+            
+        # --- 2. Crear R y P para la rectificación óptima ---
         # R (Matriz de Rectificación): Identidad para single camera.
         # P (Matriz de Proyección): Es la matriz de cámara corregida (newcam matrix).
         
-        # Usamos los parámetros de la imagen cruda que definiste en OSMO
-        img_size = (self.width, self.height)
-        
-        # La función getOptimalNewCameraMatrix de OpenCV es clave aquí:
-        # Alpha=1 devuelve la nueva matriz de cámara (P) y el ROI que recorta los bordes negros.
-        # Es lo mismo que se hacía en tu nodo anterior (IMAGE_FIXER) para obtener newcam.
-        newcam_matrix, roi = cv.getOptimalNewCameraMatrix(K, D, img_size, 1, img_size)
-        
         R = np.identity(3, dtype=np.float64) # Matriz de rotación (3x3)
         P = np.zeros((3, 4), dtype=np.float64) # Matriz de proyección (3x4)
-        P[:3, :3] = newcam_matrix # K' se coloca en las primeras 3x3 posiciones
+        P[:3, :3] = newcam_matrix
 
         # --- 3. Crear el mensaje CameraInfo ---
         msg = CameraInfo()
@@ -107,7 +115,6 @@ class CamNode(Node):
         # P (Matriz de Proyección/NewCamera 3x4)
         msg.p = P.flatten().tolist()
 
-        
         return msg
 
     def timer_callback(self):

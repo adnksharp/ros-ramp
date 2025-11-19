@@ -2,6 +2,7 @@
 /home/akey/Documentos/dev/vision/Z01/install/viz/include/include/mesh.stl
 /home/akey/Documentos/dev/vision/Z01/install/viz/include/include/params.yaml
 /home/akey/Documentos/dev/vision/Z01/install/viz/include/include/gen.py
+/home/akey/Documentos/dev/vision/Z01/install/viz/include/include/newcam.npy
 /home/akey/Documentos/dev/vision/Z01/install/viz/include/include/aruco_patterns/0795.png
 /home/akey/Documentos/dev/vision/Z01/install/viz/include/include/aruco_patterns/0901.dae
 /home/akey/Documentos/dev/vision/Z01/install/viz/include/include/aruco_patterns/0689.dae
@@ -4002,11 +4003,12 @@
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/models/0356.png
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/models/0436.png
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/models/0223.png
-/home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/launch/run.launch.py
+/home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/launch/main.yaml
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/include/gendae.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/include/mesh.stl
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/include/params.yaml
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/include/gen.py
+/home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/include/newcam.npy
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/include/aruco_patterns/0795.png
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/include/aruco_patterns/0901.dae
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/include/aruco_patterns/0689.dae
@@ -6010,9 +6012,9 @@
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/stream.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/save.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/calib.py
-/home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/fixer.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/arucos.py
-/home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/poser.py
+/home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/detector.py
+/home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/kinematics.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/ament_index/resource_index/package_run_dependencies/viz
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/ament_index/resource_index/parent_prefix_path/viz
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/viz/environment/ament_prefix_path.sh

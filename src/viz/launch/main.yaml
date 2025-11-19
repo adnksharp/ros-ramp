@@ -1,0 +1,30 @@
+launch:
+  - node:
+      pkg: image_proc
+      exec: rectify_node
+      name: image_rectifier
+      output: screen
+      param:
+        - name: "image_rect"
+          value: "camera/color/image_raw"
+        - name: "image"
+          value: "camera/color/image/raw"
+
+  - node:
+      pkg: viz
+      exec: stream.py
+      name: cam_stream
+      output: screen
+      
+  - node:
+      pkg: viz
+      exec: arucos.py
+      name: aruco_detector
+      output: screen
+
+  - node:
+      pkg: viz
+      exec: detector.py
+      name: fig_detector
+      output: screen
+

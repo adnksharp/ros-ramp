@@ -16,6 +16,8 @@ import queue
 from scipy.spatial.transform import Rotation as R_scipy
 from ament_index_python.packages import get_package_share_directory
 
+RESIZE_FACTOR = 0.5
+
 def quaternion_from_matrix(R):
     r = R_scipy.from_matrix(R)
     return r.as_quat()
@@ -57,7 +59,7 @@ class ArucoDetectorNode(Node):
             self.thread.start()
             
             self.subscription = self.create_subscription(
-                Image, 'image/fixed', self.image_callback, 10
+                Image, '/camera/color/image_raw', self.image_callback, 10
             )
             self.get_logger().info('ARUCO_DETECTOR Node ready. Searching for markers...')
             
@@ -85,39 +87,48 @@ class ArucoDetectorNode(Node):
                 self.get_logger().error(f"Unexpected queue error: {e}")
                 continue
 
-            try:
-                cap = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-            except Exception as e:
-                self.get_logger().error(f"CvBridge error in thread: {e}")
-                continue
-        
-            (corners, ids, rejected) = cv.aruco.detectMarkers(
-                cap, 
-                self.dict, 
-                parameters=self.params
-            )
-        
-            if ids is not None:
-                markers = cap.copy()
+            if msg:
+                try:
+                    cap = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+                except Exception as e:
+                    self.get_logger().error(f"CvBridge error in thread: {e}")
+                    continue
             
-                rvecs, tvecs, _ = cv.aruco.estimatePoseSingleMarkers(
-                    corners,
-                    self.markerSize,
-                    self.newcam,
-                    np.array([]) 
+                if RESIZE_FACTOR != 1.0:
+                    width = int(cap.shape[1] * RESIZE_FACTOR)
+                    height = int(cap.shape[0] * RESIZE_FACTOR)
+                    resized_cap = cv.resize(cap, (width, height), cv.INTER_AREA)
+                else:
+                    resized_cap = cap
+
+                (corners, ids, rejected) = cv.aruco.detectMarkers(
+                    resized_cap,
+                    self.dict, 
+                    parameters=self.params
                 )
             
-                for i in range(len(ids)):
-                    marker = ids[i][0]
-                    rvec = rvecs[i]
-                    tvec = tvecs[i]
+                if ids is not None:
+                    markers = cap.copy()
                 
-                    cv.aruco.drawDetectedMarkers(markers, corners)
-                    cv.drawFrameAxes(markers, self.newcam, np.array([]), rvec, tvec, self.markerSize * 0.5)
+                    if RESIZE_FACTOR != 1.0:
+                        corners_orig_res = [c / RESIZE_FACTOR for c in corners] 
+                    else:
+                        corners_orig_res = corners
 
-                    self.pubTF(marker, rvec, tvec, msg.header)
+                    rvecs, tvecs, _ = cv.aruco.estimatePoseSingleMarkers(
+                        corners_orig_res,
+                        self.markerSize,
+                        self.newcam,
+                        np.array([]) 
+                    )
                 
-                    self.pubImage(marker, markers, msg.header)
+                    for i in range(len(ids)):
+                        cv.aruco.drawDetectedMarkers(markers, corners_orig_res)
+                        cv.drawFrameAxes(markers, self.newcam, np.array([]), rvecs[i], tvecs[i], self.markerSize * 0.5)
+
+                        self.pubTF(ids[i][0], rvecs[i], tvecs[i], msg.header)
+                
+                    self.pubImage(0, markers, msg.header)
 
     def pubTF(self, marker, rvec, tvec, header):
         t = TransformStamped()

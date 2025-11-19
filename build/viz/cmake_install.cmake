@@ -62,9 +62,9 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     "/home/akey/Documentos/dev/vision/Z01/src/viz/src/stream.py"
     "/home/akey/Documentos/dev/vision/Z01/src/viz/src/save.py"
     "/home/akey/Documentos/dev/vision/Z01/src/viz/src/calib.py"
-    "/home/akey/Documentos/dev/vision/Z01/src/viz/src/fixer.py"
     "/home/akey/Documentos/dev/vision/Z01/src/viz/src/arucos.py"
-    "/home/akey/Documentos/dev/vision/Z01/src/viz/src/poser.py"
+    "/home/akey/Documentos/dev/vision/Z01/src/viz/src/detector.py"
+    "/home/akey/Documentos/dev/vision/Z01/src/viz/src/kinematics.py"
     )
 endif()
 

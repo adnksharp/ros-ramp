@@ -1,19 +1,26 @@
 cmake_minimum_required(VERSION 3.8)
 project(viz)
 
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
 # find dependencies
-find_package(ament_cmake REQUIRED)
+
+find_package(OpenCV 4 QUIET)
+if (NOT OpenCV_FOUND)
+  find_package(OpenCV REQUIRED)
+endif ()
+message(STATUS "Found OpenCV version ${OpenCV_VERSION}")
 install(DIRECTORY
     include
     DESTINATION include
 )
 
-# 2. INSTALACIÓN DE MODELOS 3D Y TEXTURAS (CORRECCIÓN CLAVE)
-# Mueve los archivos generados a una carpeta de recursos dedicada (ej: 'models')
 install(DIRECTORY
     include/aruco_patterns/
     DESTINATION share/${PROJECT_NAME}/models
@@ -31,11 +38,13 @@ install(PROGRAMS
 	src/stream.py
 	src/save.py
 	src/calib.py
-	#src/info.py
-	src/fixer.py
-	##############
 	src/arucos.py
-	src/poser.py
+	#src/info.py
+	#src/fixer.py
+	##############
+	src/detector.py
+	src/kinematics.py
+	#src/poser.py
 	DESTINATION lib/${PROJECT_NAME}
 )
 
