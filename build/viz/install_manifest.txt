@@ -6013,6 +6013,7 @@
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/save.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/calib.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/arucos.py
+/home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/isocket.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/detector.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/lib/viz/kinematics.py
 /home/akey/Documentos/dev/vision/Z01/install/viz/share/ament_index/resource_index/package_run_dependencies/viz

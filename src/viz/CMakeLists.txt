@@ -39,6 +39,7 @@ install(PROGRAMS
 	src/save.py
 	src/calib.py
 	src/arucos.py
+	src/isocket.py
 	#src/info.py
 	#src/fixer.py
 	##############
